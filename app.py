@@ -132,6 +132,5 @@ response = requests.get(url, params=params)
 # Retrieve the prediction from the **JSON** returned by the API
 data = response.json()
 st.write(response.url)
-st.write("Estimated ride price", (round(data["fare"], 2)))
 # Display the prediction to the user
-# data[0]
+st.write("Estimated ride price", (round(data["fare"], 2)))
