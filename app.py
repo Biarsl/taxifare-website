@@ -2,24 +2,17 @@ import streamlit as st
 import requests
 
 '''
-# TaxiFare Model :taxi:
+NY Taxi Fare prediction :taxi:
 '''
 
-# st.markdown('''
-# ## Remember that there are several ways to output content into your web page...
-# Either as with the title by just creating a string (or an f-string). Or as with this paragraph using the `st.` functions
-# ''')
-
-# '''
-# ## Here we would like to add some controllers in order to ask the user to select the parameters of the ride
-# 1. Let's ask for:
+# We ask for:
 # - date and time
 # - pickup longitude
 # - pickup latitude
 # - dropoff longitude
 # - dropoff latitude
 # - passenger count
-# '''
+# We answer with the prediction (taxi fare value).
 
 # Datetime
 from datetime import datetime
@@ -42,22 +35,22 @@ import pandas as pd
 
 pickup = st.text_input("Full address of pick-up location:")
 if pickup:
-    # Inicializa o geocodificador
+    # Initialize the geocoder
     geolocator = Nominatim(user_agent="streamlit-app")
-    # Faz a busca
+    # Search
     pickup_local = geolocator.geocode(pickup)
 
     if pickup_local:
         st.success("Address found!")
         pickup_longitude = pickup_local.longitude
         pickup_latitude = pickup_local.latitude
-        # Apresentar coordenadas no mapa
-        # Cria DataFrame com os dois pontos
+        # Display coordinates on the map
+        # Create a DataFrame with the two points
         lat_lon_df = pd.DataFrame({
                     'lat': [pickup_latitude],
                     'lon': [pickup_longitude],
                 })
-        # Exibe no mapa
+        # Display on map
         st.map(lat_lon_df, zoom=20)
     else:
         st.error("Address not found!")
@@ -66,7 +59,7 @@ if pickup:
 # Dropoff
 dropoff = st.text_input("Full address of drop-off location:")
 if dropoff:
-    # Faz a busca
+    # Search
     dropoff_local = geolocator.geocode(dropoff)
 
     if dropoff_local:
@@ -86,35 +79,8 @@ passenger_count = st.selectbox(
 st.write("You selected:", passenger_count)
 
 
-# # Apresentar coordenadas no mapa
-# import pandas as pd
-# # Cria DataFrame com os dois pontos
-# lat_lon_df = pd.DataFrame({
-#             'lat': [pickup_latitude, dropoff_latitude],
-#             'lon': [pickup_longitude, dropoff_longitude],
-#         })
-
-# # Exibe no mapa
-# st.map(lat_lon_df, zoom=13)
-
-# '''
-# ## Once we have these, let's call our API in order to retrieve a prediction
-# See ? No need to load a `model.joblib` file in this app, we do not even need to know anything about Data Science in order to retrieve a prediction...
-# 🤔 How could we call our API ? Off course... The `requests` package 💡
-# '''
-
+# Call the API in order to retrieve a prediction
 url = 'https://taxifare.lewagon.ai/predict'
-
-# if url == 'https://taxifare.lewagon.ai/predict':
-
-#     st.markdown('Maybe you want to use your own API for the prediction, not the one provided by Le Wagon...')
-
-# '''
-# 2. Let's build a dictionary containing the parameters for our API...
-# 3. Let's call our API using the `requests` package...
-# 4. Let's retrieve the prediction from the **JSON** returned by the API...
-# ## Finally, we can display the prediction to the user
-# '''
 
 # Build a dictionary containing the parameters for our API
 params = {
@@ -132,5 +98,6 @@ response = requests.get(url, params=params)
 # Retrieve the prediction from the **JSON** returned by the API
 data = response.json()
 st.write(response.url)
+
 # Display the prediction to the user
 st.write("Estimated ride price", (round(data["fare"], 2)))
