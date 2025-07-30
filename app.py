@@ -109,10 +109,3 @@ if st.button("Estimate Fare"):
             st.success(f"Estimated ride price: ${fare}")
         except requests.exceptions.RequestException as e:
             st.error(f"Error getting prediction: {str(e)}")
-            
-# # Retrieve the prediction from the **JSON** returned by the API
-# data = response.json()
-# st.write(response.url)
-
-# # Display the prediction to the user
-# st.write("Estimated ride price", (round(data["fare"], 2)))
