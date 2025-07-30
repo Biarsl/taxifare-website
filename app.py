@@ -2,26 +2,7 @@ import streamlit as st
 import requests
 
 # Configuração da página
-st.set_page_config(page_title="NYC Taxi Fare Predictor", page_icon="🚖", layout="wide")
-
-# Função para adicionar imagem de fundo
-def add_bg_from_url():
-    st.markdown(
-         f"""
-         <style>
-         .stApp {{
-             background-image: url("https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80");
-             background-attachment: fixed;
-             background-size: cover;
-             background-position: center;
-             background-opacity: 0.1;
-         }}
-         </style>
-         """,
-         unsafe_allow_html=True
-     )
-
-add_bg_from_url()
+st.set_page_config(page_title="NYC Taxi Fare Predictor", page_icon="🚖")
 
 # CSS para o título
 st.markdown("""
@@ -37,10 +18,6 @@ st.markdown("""
 
 # Título centralizado com emoji e estilo
 st.markdown('<p class="big-font">NYC Taxi Fare Predictor 🚕</p>', unsafe_allow_html=True)
-
-'''
-NY Taxi Fare prediction :taxi:
-'''
 
 # We ask for:
 # - date and time
