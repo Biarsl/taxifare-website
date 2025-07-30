@@ -86,29 +86,47 @@ passenger_count = st.selectbox(
 
 st.write("You selected:", passenger_count)
 
+#Prediction
+if st.button("Estimate Fare"):
+    if None in [pickup_longitude, pickup_latitude, dropoff_longitude, dropoff_latitude]:
+        st.warning("Please enter valid addresses for both locations!")
+    else:
+        params = {
+            'pickup_datetime': pickup_datetime,
+            'pickup_longitude': pickup_longitude,
+            'pickup_latitude': pickup_latitude,
+            'dropoff_longitude': dropoff_longitude,
+            'dropoff_latitude': dropoff_latitude,
+            'passenger_count': passenger_count,
+        }
+        
+        try:
+            response = requests.get('https://taxifare.lewagon.ai/predict', params=params)
+            response.raise_for_status()
+            fare = round(response.json()["fare"], 2)
+            st.success(f"Estimated ride price: ${fare}")
+        except requests.exceptions.RequestException as e:
+            st.error(f"Error getting prediction: {str(e)}")
+            
+# # Call the API in order to retrieve a prediction
+# url = 'https://taxifare.lewagon.ai/predict'
 
-# Call the API in order to retrieve a prediction
-url = 'https://taxifare.lewagon.ai/predict'
+# # Build a dictionary containing the parameters for our API
+# params = {
+#     'pickup_datetime': pickup_datetime,
+#     'pickup_longitude': pickup_longitude,
+#     'pickup_latitude': pickup_latitude,
+#     'dropoff_longitude': dropoff_longitude,
+#     'dropoff_latitude': dropoff_latitude,
+#     'passenger_count': passenger_count,
+# }
 
-# Build a dictionary containing the parameters for our API
-params = {
-    'pickup_datetime': pickup_datetime,
-    'pickup_longitude': pickup_longitude,
-    'pickup_latitude': pickup_latitude,
-    'dropoff_longitude': dropoff_longitude,
-    'dropoff_latitude': dropoff_latitude,
-    'passenger_count': passenger_count,
-}
+# # Call our API using the `requests` package
+# response = requests.get(url, params=params)
 
-# Call our API using the `requests` package
-response = requests.get(url, params=params)
-
-# Retrieve the prediction from the **JSON** returned by the API
-data = response.json()
+# # Retrieve the prediction from the **JSON** returned by the API
+# data = response.json()
 # st.write(response.url)
 
-# Display the prediction to the user
-if data:
-    st.write("Estimated ride price", (round(data["fare"], 2)))
-else:
-    st.error("Oops! The app ran into a problem.")
+# # Display the prediction to the user
+# st.write("Estimated ride price", (round(data["fare"], 2)))
