@@ -108,4 +108,7 @@ data = response.json()
 st.write(response.url)
 
 # Display the prediction to the user
-st.write("Estimated ride price", (round(data["fare"], 2)))
+if data:
+    st.write("Estimated ride price", (round(data["fare"], 2)))
+else:
+    st.error("Oops! The app ran into a problem.")
