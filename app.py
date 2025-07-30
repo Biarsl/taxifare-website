@@ -105,7 +105,7 @@ response = requests.get(url, params=params)
 
 # Retrieve the prediction from the **JSON** returned by the API
 data = response.json()
-st.write(response.url)
+# st.write(response.url)
 
 # Display the prediction to the user
 if data:
