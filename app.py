@@ -4,20 +4,7 @@ import requests
 # Configuração da página
 st.set_page_config(page_title="NYC Taxi Fare Predictor", page_icon="🚖")
 
-# CSS para o título
-st.markdown("""
-<style>
-.big-font {
-    font-size:50px !important;
-    font-weight: bold;
-    color: #FFFFFF;
-    text-shadow: 2px 2px 4px #000000;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Título centralizado com emoji e estilo
-st.markdown('<p class="big-font">NYC Taxi Fare Predictor 🚕</p>', unsafe_allow_html=True)
+st.title("NYC Taxi Fare Predictor 🚕")
 
 # We ask for:
 # - date and time
