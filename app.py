@@ -51,7 +51,7 @@ if pickup:
                     'lon': [pickup_longitude],
                 })
         # Display on map
-        st.map(lat_lon_df, zoom=10)
+        st.map(lat_lon_df, zoom=15)
     else:
         st.error("Address not found!")
 
@@ -73,7 +73,7 @@ if dropoff:
                     'lon': [dropoff_longitude],
                 })
         # Display on map
-        st.map(lat_lon_df_2, zoom=10)
+        st.map(lat_lon_df_2, zoom=15)
     else:
         st.error("Address not found!")
 
@@ -104,11 +104,8 @@ params = {
 response = requests.get(url, params=params)
 
 # Retrieve the prediction from the **JSON** returned by the API
-if response:
-    data = response.json()
-    st.write(response.url)
-else:
-    st.error("App has a problem!")
+data = response.json()
+st.write(response.url)
 
 # Display the prediction to the user
 st.write("Estimated ride price", (round(data["fare"], 2)))
