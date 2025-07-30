@@ -1,6 +1,43 @@
 import streamlit as st
 import requests
 
+# Configuração da página
+st.set_page_config(page_title="NYC Taxi Fare Predictor", page_icon="🚖", layout="wide")
+
+# Função para adicionar imagem de fundo
+def add_bg_from_url():
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background-image: url("https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80");
+             background-attachment: fixed;
+             background-size: cover;
+             background-position: center;
+             background-opacity: 0.1;
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
+add_bg_from_url()
+
+# CSS para o título
+st.markdown("""
+<style>
+.big-font {
+    font-size:50px !important;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-shadow: 2px 2px 4px #000000;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Título centralizado com emoji e estilo
+st.markdown('<p class="big-font">NYC Taxi Fare Predictor 🚕</p>', unsafe_allow_html=True)
+
 '''
 NY Taxi Fare prediction :taxi:
 '''
@@ -103,27 +140,12 @@ if st.button("Estimate Fare"):
         try:
             response = requests.get('https://taxifare.lewagon.ai/predict', params=params)
             response.raise_for_status()
-            fare = round(response.json()["fare"], 2)
+            data = response.json()
+            fare = round(data["fare"], 2)
             st.success(f"Estimated ride price: ${fare}")
         except requests.exceptions.RequestException as e:
             st.error(f"Error getting prediction: {str(e)}")
             
-# # Call the API in order to retrieve a prediction
-# url = 'https://taxifare.lewagon.ai/predict'
-
-# # Build a dictionary containing the parameters for our API
-# params = {
-#     'pickup_datetime': pickup_datetime,
-#     'pickup_longitude': pickup_longitude,
-#     'pickup_latitude': pickup_latitude,
-#     'dropoff_longitude': dropoff_longitude,
-#     'dropoff_latitude': dropoff_latitude,
-#     'passenger_count': passenger_count,
-# }
-
-# # Call our API using the `requests` package
-# response = requests.get(url, params=params)
-
 # # Retrieve the prediction from the **JSON** returned by the API
 # data = response.json()
 # st.write(response.url)
